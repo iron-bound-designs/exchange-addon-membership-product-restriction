@@ -1,7 +1,7 @@
-=== Membership Product Restrictions Addon for iThemes Exchange ===
+=== Membership Product Restrictions Add-on for iThemes Exchange ===
 Contributors: TimothyBlynJacobs
 Donate link: http://ironbounddesigns.com/
-Tags: iThemes Exchange, addon, ecommerce, discount
+Tags: iThemes Exchange, addon, ecommerce, discount, membership, restrictions, members
 Requires at least: 3.8
 Tested up to: 3.9
 Stable tag: 1.0
