@@ -18,7 +18,7 @@
  */
 function it_exchange_mpr_addon_user_has_access_to_required_membership_product( $user_id, $required_product_id ) {
 	if ( $user_id == 0 )
-		return false;
+		return apply_filters( 'it_exchange_mpr_addon_user_has_access_to_required_membership_product', false, $user_id, $required_product_id );
 
 	$parents = it_exchange_membership_addon_get_all_the_parents( $required_product_id );
 	array_unshift( $parents, (int) $required_product_id );
@@ -30,11 +30,11 @@ function it_exchange_mpr_addon_user_has_access_to_required_membership_product( $
 
 	foreach ( $customer_products as $customer_product ) {
 		if ( in_array( $customer_product['product_id'], $parents ) ) {
-			return true;
+			return apply_filters( 'it_exchange_mpr_addon_user_has_access_to_required_membership_product', true, $user_id, $required_product_id );
 		}
 	}
 
-	return false;
+	return apply_filters( 'it_exchange_mpr_addon_user_has_access_to_required_membership_product', false, $user_id, $required_product_id );
 }
 
 /**
