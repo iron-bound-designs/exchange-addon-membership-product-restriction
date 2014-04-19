@@ -1,0 +1,32 @@
+=== Membership Product Restrictions Addon for iThemes Exchange ===
+Contributors: TimothyBlynJacobs
+Donate link: http://ironbounddesigns.com/
+Tags: iThemes Exchange, addon, ecommerce, discount
+Requires at least: 3.8
+Tested up to: 3.9
+Stable tag: 1.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Membership Product Restrictions is an iThemes Exchange add-on that allows you to require users to have a certain membership product to purchase a desired item.
+
+== Description ==
+
+This plugin allows you to restrict the purchase product to customers who have purchased a desired membership.
+
+You can only let members purchase the product, or you can offer it to members for free, or even charge an additional fee for non-members.
+
+Requires iThemes Exchange and the Membership Add-on.
+
+
+== Installation ==
+
+1. Download and unzip the latest release zip file.
+2. If you use the WordPress plugin uploader to install this plugin skip to step 4.
+3. Upload the entire plugin directory to your `/wp-content/plugins/` directory.
+4. Activate the plugin through the 'Plugins' menu in WordPress Administration.
+
+== Changelog ==
+
+= 1.0 =
+* Initial Release
