@@ -22,5 +22,17 @@ jQuery( document ).ready( function ( $ ) {
             $( "#mpr-addon-hide-from-store-container" ).hide();
         }
 
+        if ( $( this ).attr( 'id' ) == 'mpr-addon-free-for-member-select' ) {
+            $( "#mpr-addon-free-for-member-container" ).show();
+        } else {
+            $( "#mpr-addon-free-for-member-container" ).hide();
+        }
+
+    } );
+
+    $( "#mpr-addon-free-after-date" ).datepicker( {
+        prevText: '',
+        nextText: '',
+        dateFormat: $( 'input[name=it_exchange_availability_date_picker_format]' ).val()
     } );
 } );

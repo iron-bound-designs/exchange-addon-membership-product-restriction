@@ -47,6 +47,12 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 	function print_metabox( $post ) {
 		$membership_products = it_exchange_get_products( array( 'product_type' => 'membership-product-type', 'numberposts' => - 1, 'show_hidden' => true ) );
 		wp_enqueue_script( 'it-exchange-membership-product-restriction-single-edit', IT_Exchange_Membership_Product_Restriction::$url . "assets/js/single-edit.js", array( 'jquery' ) );
+
+		if ( $this->feature_data['free_after_date'] )
+			$date = date( get_option( 'date_format', 'm/d/Y' ), $this->feature_data['free_after_date'] );
+		else
+			$date = '';
+
 		?>
 		<p><?php _e( "Use these options to restrict the purchase of this product to users who have purchased a desired product.", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></p>
 		<div>
@@ -68,7 +74,7 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 			<p><?php _e( "How would you like to handle the restriction?" ); ?></p>
 
 			<label>
-				<input type="radio" name="mpr_addon[action]" class="mpr-addon-action" <?php checked( $this->feature_data['action'], 'free-for-member' ); ?> value="free-for-member">
+				<input type="radio" name="mpr_addon[action]" class="mpr-addon-action" id="mpr-addon-free-for-member-select" <?php checked( $this->feature_data['action'], 'free-for-member' ); ?> value="free-for-member">
 				<?php _e( "Make this product free for members", IT_Exchange_Membership_Product_Restriction::SLUG ); ?>
 			</label>
 
@@ -92,6 +98,11 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 					<input type="checkbox" name="mpr_addon[hide_from_store]" <?php checked( $this->feature_data['hide_from_store'], true ); ?>>
 					<?php _e( "Hide this product from the store for non-members?", IT_Exchange_Membership_Product_Restriction::SLUG ); ?>
 				</label>
+			</div>
+
+			<div id="mpr-addon-free-for-member-container" class="<?php if ( $this->feature_data['action'] != 'free-for-member' ) echo "hide-if-js"; ?>">
+				<label for="mpr-addon-free-after-date"><?php _e( "Only make the product free after a certain date", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></label>
+				<input type="text" class="" name="mpr_addon[free_after_date]" id="mpr-addon-free-after-date" value="<?php echo $date; ?>">
 			</div>
 		</div>
 
@@ -137,6 +148,37 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 			$new_values['hide_from_store'] = true;
 		else
 			$new_values['hide_from_store'] = false;
+
+		/*
+		 * Start date parsing
+		 */
+
+		// Get the user's option set in WP General Settings
+		$wp_date_format = get_option( 'date_format', 'm/d/Y' );
+
+		$date_val = $data['free_after_date'];
+
+		// strtotime requires formats starting with day to be separated by - and month separated by /
+		if ( 'd' == substr( $wp_date_format, 0, 1 ) )
+			$date_val = str_replace( '/', '-', $date_val );
+
+		// Transfer to epoch
+		if ( $epoch = strtotime( $date_val ) ) {
+
+			// Returns an array with values of each date segment
+			$date = date_parse( $date_val );
+
+			// Confirms we have a legitimate date
+			if ( checkdate( $date['month'], $date['day'], $date['year'] ) )
+				$new_values['free_after_date'] = $epoch;
+		}
+
+		if ( ! isset( $new_values['free_after_date'] ) )
+			$new_values['free_after_date'] = false;
+
+		/*
+		 * End date parsing
+		 */
 
 		update_post_meta( $product_id, '_mpr_addon_hide_from_store', ( $new_values['enable'] && $new_values['action'] == 'members-only' ) ? $new_values['hide_from_store'] : false );
 
@@ -193,6 +235,11 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 
 		if ( ! isset( $raw_meta['hide_from_store'] ) )
 			$raw_meta['hide_from_store'] = false;
+
+		if ( ! isset( $raw_meta['free_after_date'] ) )
+			$raw_meta['free_after_date'] = false;
+
+		$raw_meta['free_after_date'] = apply_filters( 'it_exchange_mpr_addon_free_after_date', $raw_meta['free_after_date'], $product_id );
 
 		if ( ! isset( $options['field'] ) ) // if we aren't looking for a particular field
 			return $raw_meta;
