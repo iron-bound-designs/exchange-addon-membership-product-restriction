@@ -138,7 +138,7 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 		else
 			$new_values['hide_from_store'] = false;
 
-		update_post_meta( $product_id, '_mpr_addon_hide_from_store', ( $new_values['action'] == 'members-only' ) ? $new_values['hide_from_store'] : false );
+		update_post_meta( $product_id, '_mpr_addon_hide_from_store', ( $new_values['enable'] && $new_values['action'] == 'members-only' ) ? $new_values['hide_from_store'] : false );
 
 		it_exchange_update_product_feature( $product_id, $this->slug, $new_values );
 	}
