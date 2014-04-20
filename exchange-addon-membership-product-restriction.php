@@ -74,13 +74,6 @@ class IT_Exchange_Membership_Product_Restriction {
 		self::$dir = plugin_dir_path( __FILE__ );
 		self::$url = plugin_dir_url( __FILE__ );
 		spl_autoload_register( array( "IT_Exchange_Membership_Product_Restriction", "autoload" ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'scripts_and_styles' ) );
-	}
-
-	/**
-	 *
-	 */
-	public function scripts_and_styles() {
 	}
 
 	/**
