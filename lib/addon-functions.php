@@ -21,6 +21,10 @@ function it_exchange_mpr_addon_user_has_access_to_required_membership_product( $
 		return apply_filters( 'it_exchange_mpr_addon_user_has_access_to_required_membership_product', false, $user_id, $required_product_id );
 
 	$parents = it_exchange_membership_addon_get_all_the_parents( $required_product_id );
+
+	if ( ! is_array( $parents ) )
+		$parents = array();
+
 	array_unshift( $parents, (int) $required_product_id );
 
 	if ( ! empty( $_GET['it-exchange-sw-ajax'] ) )
