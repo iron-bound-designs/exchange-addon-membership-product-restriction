@@ -16,21 +16,23 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 	/**
 	 * @var int
 	 */
-	protected $post_id;
+	protected $post_id = - 1;
 
 	/**
 	 *
 	 */
 	function __construct() {
-		$this->post_id = $_GET['post'];
+		if ( isset( $_GET['post'] ) )
+			$this->post_id = $_GET['post'];
 
 		$args = array(
 		  'slug'          => 'membership-product-restriction',
 		  'metabox_title' => __( 'Membership Product Restriction', IT_Exchange_Membership_Product_Restriction::SLUG )
 		);
-		parent::IT_Exchange_Product_Feature_Abstract( $args );
 
 		$this->metabox_title = $args['metabox_title'];
+
+		parent::IT_Exchange_Product_Feature_Abstract( $args );
 
 		$this->feature_data = it_exchange_get_product_feature( $this->post_id, $this->slug );
 	}
