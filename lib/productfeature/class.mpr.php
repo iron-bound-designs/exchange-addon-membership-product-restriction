@@ -55,6 +55,11 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 		else
 			$date = '';
 
+		if ( $this->feature_data['non_members_free_after_date'] )
+			$nm_date = date( get_option( 'date_format', 'm/d/Y' ), $this->feature_data['non_members_free_after_date'] );
+		else
+			$nm_date = '';
+
 		?>
 		<p><?php _e( "Use these options to restrict the purchase of this product to users who have purchased a desired product.", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></p>
 		<div>
@@ -103,8 +108,13 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 			</div>
 
 			<div id="mpr-addon-free-for-member-container" class="<?php if ( $this->feature_data['action'] != 'free-for-member' ) echo "hide-if-js"; ?>">
-				<label for="mpr-addon-free-after-date"><?php _e( "Only make the product free after a certain date", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></label>
+				<label for="mpr-addon-free-after-date"><?php _e( "Only make the product free for members after a certain date", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></label>
 				<input type="text" class="" name="mpr_addon[free_after_date]" id="mpr-addon-free-after-date" value="<?php echo $date; ?>">
+			</div>
+
+			<div id="mpr-addon-free-for-non-members-container" class="<?php if ( $this->feature_data['action'] != 'free-for-member' ) echo "hide-if-js"; ?>">
+				<label for="mpr-addon-non-members-free-after-date"><?php _e( "Make the product free for non-members too after a certain date", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></label>
+				<input type="text" class="" name="mpr_addon[non_members_free_after_date]" id="mpr-addon-non-members-free-after-date" value="<?php echo $nm_date; ?>">
 			</div>
 		</div>
 
@@ -178,6 +188,28 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 		if ( ! isset( $new_values['free_after_date'] ) )
 			$new_values['free_after_date'] = false;
 
+		// ------- free after for non-members -------
+
+		$date_val_nm = $data['non_members_free_after_date'];
+
+		// strtotime requires formats starting with day to be separated by - and month separated by /
+		if ( 'd' == substr( $wp_date_format, 0, 1 ) )
+			$date_val_nm = str_replace( '/', '-', $date_val_nm );
+
+		// Transfer to epoch
+		if ( $epoch = strtotime( $date_val_nm ) ) {
+
+			// Returns an array with values of each date segment
+			$date_nm = date_parse( $date_val_nm );
+
+			// Confirms we have a legitimate date
+			if ( checkdate( $date_nm['month'], $date_nm['day'], $date_nm['year'] ) )
+				$new_values['non_members_free_after_date'] = $epoch;
+		}
+
+		if ( ! isset( $new_values['non_members_free_after_date'] ) )
+			$new_values['non_members_free_after_date'] = false;
+
 		/*
 		 * End date parsing
 		 */
@@ -241,7 +273,11 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 		if ( ! isset( $raw_meta['free_after_date'] ) )
 			$raw_meta['free_after_date'] = false;
 
+		if ( ! isset( $raw_meta['non_members_free_after_date'] ) )
+			$raw_meta['non_members_free_after_date'] = false;
+
 		$raw_meta['free_after_date'] = apply_filters( 'it_exchange_mpr_addon_free_after_date', $raw_meta['free_after_date'], $product_id );
+		$raw_meta['non_members_free_after_date'] = apply_filters( 'it_exchange_mpr_addon_non_members_free_after_date', $raw_meta['non_members_free_after_date'], $product_id );
 
 		if ( ! isset( $options['field'] ) ) // if we aren't looking for a particular field
 			return $raw_meta;

@@ -25,8 +25,15 @@ function it_exchange_mpr_addon_make_product_free_for_members( $incoming, $produc
 	if ( $feature['action'] != 'free-for-member' )
 		return $incoming;
 
-	if ( ! it_exchange_mpr_addon_user_has_access_to_required_membership_product( get_current_user_id(), $feature['membership_product'] ) )
+	if ( ! it_exchange_mpr_addon_user_has_access_to_required_membership_product( get_current_user_id(), $feature['membership_product'] ) ) {
+		if ( ! $feature['non_members_free_after_date'] )
+			return $incoming;
+
+		if ( $feature['non_members_free_after_date'] < time() )
+			return 0;
+
 		return $incoming;
+	}
 
 	if ( ! $feature['free_after_date'] ) // if this is a regular free product, and not free after a certain date
 		return 0;

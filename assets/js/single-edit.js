@@ -35,4 +35,10 @@ jQuery( document ).ready( function ( $ ) {
         nextText: '',
         dateFormat: $( 'input[name=it_exchange_availability_date_picker_format]' ).val()
     } );
+
+    $( "#mpr-addon-non-members-free-after-date" ).datepicker( {
+        prevText: '',
+        nextText: '',
+        dateFormat: $( 'input[name=it_exchange_availability_date_picker_format]' ).val()
+    } );
 } );
