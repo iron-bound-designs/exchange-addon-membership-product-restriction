@@ -3,8 +3,8 @@ Contributors: TimothyBlynJacobs
 Donate link: http://ironbounddesigns.com/
 Tags: iThemes Exchange, addon, ecommerce, discount, membership, restrictions, members
 Requires at least: 3.8
-Tested up to: 3.9
-Stable tag: 1.0
+Tested up to: 3.9.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,10 @@ Requires iThemes Exchange and the Membership Add-on.
 4. Activate the plugin through the 'Plugins' menu in WordPress Administration.
 
 == Changelog ==
+
+= 1.1 =
+* Fix: Eliminate isset errors on product editing pages
+* Add: Allow to create a product that is free for non-members after a certain date
 
 = 1.0 =
 * Initial Release
