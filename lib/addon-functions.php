@@ -20,17 +20,44 @@ function it_exchange_mpr_addon_user_has_access_to_required_membership_product( $
 	if ( $user_id == 0 )
 		return apply_filters( 'it_exchange_mpr_addon_user_has_access_to_required_membership_product', false, $user_id, $required_product_id );
 
-	$parents = it_exchange_membership_addon_get_all_the_parents( $required_product_id );
+	$all_parents = wp_cache_get( 'it_exchange_mpr_all_parents' );
 
-	if ( ! is_array( $parents ) )
+	if ( false === $all_parents || !isset( $all_parents[$required_product_id] ) ) {
+		if ( !is_array( $all_parents ) ) {
+			$all_parents = array();
+		}
+
+		$all_parents[$required_product_id] = it_exchange_membership_addon_get_all_the_parents( $required_product_id );
+
+		wp_cache_set( 'it_exchange_mpr_all_parents', $all_parents, '', 60 );
+	}
+
+	$parents = $all_parents[$required_product_id];
+
+	if ( !is_array( $parents ) )
 		$parents = array();
 
 	array_unshift( $parents, (int) $required_product_id );
 
-	if ( ! empty( $_GET['it-exchange-sw-ajax'] ) )
-		$customer_products = it_exchange_mpr_addon_ajax_get_customer_products( $user_id );
-	else
-		$customer_products = it_exchange_get_customer_products( $user_id );
+	$all_customer_products = wp_cache_get( 'it_exchange_mpr_all_customer_products' );
+
+	if ( false === $all_customer_products || !isset( $all_customer_products[$user_id] ) ) {
+
+		if ( !is_array( $all_customer_products ) ) {
+			$all_customer_products = array();
+		}
+
+		if ( !empty( $_GET['it-exchange-sw-ajax'] ) )
+			$customer_products = it_exchange_mpr_addon_ajax_get_customer_products( $user_id );
+		else
+			$customer_products = it_exchange_get_customer_products( $user_id );
+
+		$all_customer_products[$user_id] = $customer_products;
+
+		wp_cache_set( 'it_exchange_mpr_all_customer_products', $all_customer_products, '', 60 );
+	}
+
+	$customer_products = $all_customer_products[$user_id];
 
 	foreach ( $customer_products as $customer_product ) {
 		if ( in_array( $customer_product['product_id'], $parents ) ) {
@@ -66,7 +93,7 @@ function it_exchange_mpr_addon_ajax_get_customer_products( $user_id ) {
 	$args['meta_query'] = empty( $args['meta_query'] ) ? array() : $args['meta_query'];
 
 	// Fold in transaction_method
-	if ( ! empty( $args['transaction_method'] ) ) {
+	if ( !empty( $args['transaction_method'] ) ) {
 		$meta_query = array(
 		  'key'   => '_it_exchange_transaction_method',
 		  'value' => $args['transaction_method'],
@@ -75,7 +102,7 @@ function it_exchange_mpr_addon_ajax_get_customer_products( $user_id ) {
 	}
 
 	// Fold in transaction_status
-	if ( ! empty( $args['transaction_status'] ) ) {
+	if ( !empty( $args['transaction_status'] ) ) {
 		$meta_query = array(
 		  'key'   => '_it_exchange_transaction_status',
 		  'value' => $args['transaction_status'],
@@ -84,7 +111,7 @@ function it_exchange_mpr_addon_ajax_get_customer_products( $user_id ) {
 	}
 
 	// Fold in customer
-	if ( ! empty( $args['customer_id'] ) ) {
+	if ( !empty( $args['customer_id'] ) ) {
 		$meta_query = array(
 		  'key'   => '_it_exchange_customer_id',
 		  'value' => $args['customer_id'],

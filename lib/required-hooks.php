@@ -79,6 +79,9 @@ add_filter( 'it_exchange_get_product_feature_base-price', 'it_exchange_mpr_addon
  * @param $query WP_Query
  */
 function it_exchange_mpr_addon_hide_product_for_non_members( $query ) {
+	if ( $query->get( 'posts_per_page' ) != -1 )
+		return;
+
 	if ( ! it_exchange_is_page( 'store' ) )
 		return;
 
