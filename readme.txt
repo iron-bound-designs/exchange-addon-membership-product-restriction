@@ -4,7 +4,7 @@ Donate link: http://ironbounddesigns.com/
 Tags: iThemes Exchange, addon, ecommerce, discount, membership, restrictions, members
 Requires at least: 3.8
 Tested up to: 3.9.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,9 @@ Requires iThemes Exchange and the Membership Add-on.
 4. Activate the plugin through the 'Plugins' menu in WordPress Administration.
 
 == Changelog ==
+
+= 1.2 =
+* Fix: Speed improvements
 
 = 1.1 =
 * Fix: Eliminate isset errors on product editing pages
