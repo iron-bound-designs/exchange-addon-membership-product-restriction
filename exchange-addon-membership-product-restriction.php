@@ -19,17 +19,18 @@ Domain: ibd-exchange-addon-membership-product-restriction
  */
 function it_exchange_register_membership_product_restriction_addon() {
 	$options = array(
-	  'name'        => __( 'Membership Product Restriction', IT_Exchange_Membership_Product_Restriction::SLUG ),
-	  'description' => __( 'Limit product purchase to certain membership products', IT_Exchange_Membership_Product_Restriction::SLUG ),
-	  'author'      => 'Iron Bound Designs',
-	  'author_url'  => 'http://www.ironbounddesigns.com',
-	  'file'        => dirname( __FILE__ ) . '/init.php',
-	  'icon'        => IT_Exchange_Membership_Product_Restriction::$url . 'assets/images/icon-50x50.png',
-	  'category'    => 'product-feature',
-	  'basename'    => plugin_basename( __FILE__ ),
-	  'labels'      => array(
-		'singular_name' => __( 'Membership Product Restriction', IT_Exchange_Membership_Product_Restriction::SLUG ),
-	  )
+		'name'              => __( 'Membership Product Restriction', IT_Exchange_Membership_Product_Restriction::SLUG ),
+		'description'       => __( 'Limit product purchase to certain membership products', IT_Exchange_Membership_Product_Restriction::SLUG ),
+		'author'            => 'Iron Bound Designs',
+		'author_url'        => 'http://www.ironbounddesigns.com',
+		'file'              => dirname( __FILE__ ) . '/init.php',
+		'icon'              => IT_Exchange_Membership_Product_Restriction::$url . 'assets/images/icon-50x50.png',
+		'settings-callback' => 'it_exchange_mpr_addon_settings',
+		'category'          => 'product-feature',
+		'basename'          => plugin_basename( __FILE__ ),
+		'labels'            => array(
+			'singular_name' => __( 'Membership Product Restriction', IT_Exchange_Membership_Product_Restriction::SLUG ),
+		)
 	);
 	it_exchange_register_addon( 'membership-product-restriction-product-type', $options );
 }
@@ -75,7 +76,10 @@ class IT_Exchange_Membership_Product_Restriction {
 	public function __construct() {
 		self::$dir = plugin_dir_path( __FILE__ );
 		self::$url = plugin_dir_url( __FILE__ );
-		spl_autoload_register( array( "IT_Exchange_Membership_Product_Restriction", "autoload" ) );
+		spl_autoload_register( array(
+				"IT_Exchange_Membership_Product_Restriction",
+				"autoload"
+			) );
 	}
 
 	/**
@@ -85,19 +89,18 @@ class IT_Exchange_Membership_Product_Restriction {
 	 */
 	public static function autoload( $class_name ) {
 		if ( substr( $class_name, 0, 15 ) != "IT_Exchange_MPR" ) {
-			$path = self::$dir . "lib/classes";
+			$path  = self::$dir . "lib/classes";
 			$class = strtolower( $class_name );
 
 			$name = str_replace( "_", "-", $class );
-		}
-		else {
+		} else {
 			$path = self::$dir . "lib";
 
 			$class = substr( $class_name, 15 );
 			$class = strtolower( $class );
 
 			$parts = explode( "_", $class );
-			$name = array_pop( $parts );
+			$name  = array_pop( $parts );
 
 			$path .= implode( "/", $parts );
 		}

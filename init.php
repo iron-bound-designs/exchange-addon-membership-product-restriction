@@ -20,3 +20,8 @@ require_once( IT_Exchange_Membership_Product_Restriction::$dir . "lib/addon-func
  * Load our required hooks
  */
 require_once( IT_Exchange_Membership_Product_Restriction::$dir . "lib/required-hooks.php" );
+
+/**
+ * Load the settings page.
+ */
+require_once( IT_Exchange_Membership_Product_Restriction::$dir . "lib/settings.php" );
