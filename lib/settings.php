@@ -60,9 +60,9 @@ class IT_Exchange_MPR_Add_On_Settings {
 
 		if ( ! empty( $_POST ) && $this->_is_admin && 'it-exchange-addons' == $this->_current_page && 'membership-product-restriction-product-type' == $this->_current_add_on ) {
 			add_action( 'it_exchange_save_add_on_settings_mpr', array(
-					$this,
-					'save_settings'
-				) );
+				$this,
+				'save_settings'
+			) );
 			do_action( 'it_exchange_save_add_on_settings_mpr' );
 		}
 	}
@@ -133,18 +133,32 @@ class IT_Exchange_MPR_Add_On_Settings {
 
 		<div class="it-exchange-addon-settings it-exchange-mpr-addon-settings">
 			<div>
-				<label for="cannot-purchase-message"><?php _e( 'Purchase Requirement Message', IT_Exchange_Membership_Product_Restriction::SLUG ); ?>
+				<label for="cannot-purchase-message">
+					<?php _e( 'Purchase Requirement Message', IT_Exchange_Membership_Product_Restriction::SLUG ); ?>
 					<span class="tip" title="<?php esc_attr_e( 'This message appears when a user cannot purchase a certain product, because they don\'t have the required membership. ', IT_Exchange_Membership_Product_Restriction::SLUG ); ?>">
 						i
 					</span>
 				</label>
 				<?php
 				$form->add_text_box( 'cannot-purchase-message', array(
-					'style' => 'width:600px',
+					'style' => 'max-width:600px;width:100%',
 					'class' => 'large-text'
 				) );
 				?>
-				<p><?php _e( "You can use <code>%product%</code> to substitute the require product title.", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></p>
+				<p><em><?php _e( "You can use <code>%product%</code> to substitute the required product title.", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></em></p>
+				<p><em>
+						<?php printf( __( "Default Message: %s", IT_Exchange_Membership_Product_Restriction::SLUG ),
+						__( 'Sorry, you need to have purchased the %product% product to purchase this item.', IT_Exchange_Membership_Product_Restriction::SLUG ) ); ?>
+					</em>
+				</p>
+			</div>
+
+			<div>
+				<label for="product-link-new-tab">
+					<?php _e( "Open Required Product Link in New Tab", IT_Exchange_Membership_Product_Restriction::SLUG ); ?>
+				</label>
+
+				<p><?php $form->add_check_box( 'product-link-new-tab' ); ?></p>
 			</div>
 		</div>
 	<?php
