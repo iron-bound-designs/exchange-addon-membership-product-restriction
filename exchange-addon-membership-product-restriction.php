@@ -19,8 +19,8 @@ Domain: ibd-exchange-addon-membership-product-restriction
  */
 function it_exchange_register_membership_product_restriction_addon() {
 	$options = array(
-	  'name'        => __( 'Membership Product Restriction', 'ibd-exchange-addon-membership-product-restriction' ),
-	  'description' => __( 'Limit product purchase to certain membership products', 'ibd-exchange-addon-membership-product-restriction' ),
+	  'name'        => __( 'Membership Product Restriction', IT_Exchange_Membership_Product_Restriction::SLUG ),
+	  'description' => __( 'Limit product purchase to certain membership products', IT_Exchange_Membership_Product_Restriction::SLUG ),
 	  'author'      => 'Iron Bound Designs',
 	  'author_url'  => 'http://www.ironbounddesigns.com',
 	  'file'        => dirname( __FILE__ ) . '/init.php',
@@ -28,7 +28,7 @@ function it_exchange_register_membership_product_restriction_addon() {
 	  'category'    => 'product-feature',
 	  'basename'    => plugin_basename( __FILE__ ),
 	  'labels'      => array(
-		'singular_name' => __( 'Membership Product Restriction', 'ibd-exchange-addon-membership-product-restriction' ),
+		'singular_name' => __( 'Membership Product Restriction', IT_Exchange_Membership_Product_Restriction::SLUG ),
 	  )
 	);
 	it_exchange_register_addon( 'membership-product-restriction-product-type', $options );

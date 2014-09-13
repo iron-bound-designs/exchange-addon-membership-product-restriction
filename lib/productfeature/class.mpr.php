@@ -78,7 +78,7 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 				<?php endforeach; ?>
 			</select>
 
-			<p><?php _e( "How would you like to handle the restriction?" ); ?></p>
+			<p><?php _e( "How would you like to handle the restriction?", IT_Exchange_Membership_Product_Restriction::SLUG ); ?></p>
 
 			<label>
 				<input type="radio" name="mpr_addon[action]" class="mpr-addon-action" id="mpr-addon-free-for-member-select" <?php checked( $this->feature_data['action'], 'free-for-member' ); ?> value="free-for-member">
