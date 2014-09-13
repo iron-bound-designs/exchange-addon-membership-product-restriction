@@ -12,14 +12,14 @@
  * to the exchange/ directory located in your theme.
  */
 
-$target_membership_product = it_exchange_get_product( it_exchange_get_product_feature( $GLOBALS['it_exchange']['product']->ID, 'membership-product-restriction', array( 'field' => 'membership_product' ) ) );
+$product_id = it_exchange_get_product_feature( $GLOBALS['it_exchange']['product']->ID, 'membership-product-restriction', array( 'field' => 'membership_product' ) );
 ?>
 
 <?php do_action( 'it_exchange_mpr_addon_before_purchase_requirement' ); ?>
 	<div class="it-exchange-checkout-purchase-requirements-notification">
 		<?php do_action( 'it_exchange_mpr_addon_begin_purchase_requirement' ); ?>
 
-		<?php echo it_exchange_mpr_addon_get_purchase_requirement_message( $target_membership_product->ID ); ?>
+		<?php echo it_exchange_mpr_addon_get_purchase_requirement_message( $product_id ); ?>
 
 		<?php do_action( 'it_exchange_mpr_addon_end_purchase_requirement' ); ?>
 	</div>
