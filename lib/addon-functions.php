@@ -65,6 +65,13 @@ function it_exchange_mpr_addon_user_has_access_to_required_membership_product( $
 		}
 	}
 
+	/**
+	 * Filter whether the user has access to the required membership product.
+	 *
+	 * @param $has_access bool
+	 * @param $user_id int
+	 * @param $required_product_id int
+	 */
 	return apply_filters( 'it_exchange_mpr_addon_user_has_access_to_required_membership_product', false, $user_id, $required_product_id );
 }
 
