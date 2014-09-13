@@ -169,11 +169,19 @@ function it_exchange_mpr_addon_get_purchase_requirement_message( $required_produ
 		$target = ' target="_blank"';
 	}
 
-	$link = "<a href=\"$url\" $target>$title</a>";
+	$attr = '';
+	/**
+	 * Allow for additional attributes to be set in the a tag.
+	 *
+	 * @param $attr string
+	 * @param $product IT_Exchange_Product
+	 */
+	$attr = apply_filters( 'it_exchange_mpr_addon_purchase_requirement_link_attr', $attr, $product );
+
+	$link = "<a href=\"$url\" $target $attr>$title</a>";
 
 	$default = sprintf( __( "Sorry, you need to have purchased the %s product to purchase this item.",
 			IT_Exchange_Membership_Product_Restriction::SLUG ), $link );
-
 
 	$message = $addon_settings['cannot-purchase-message'];
 
@@ -183,7 +191,12 @@ function it_exchange_mpr_addon_get_purchase_requirement_message( $required_produ
 		$message = str_replace( "%product%", $link, $message );
 	}
 
-	$message = apply_filters( 'it_exchange_mpr_addon_purchase_requirement_notification_text', $message,  $product );
-
-	return $message;
+	/**
+	 * Filters the purchase message that is outputted,
+	 * if the customer does not have the required product.
+	 *
+	 * @param $message string The purchase message.
+	 * @param $product IT_Exchange_Product The required product.
+	 */
+	return apply_filters( 'it_exchange_mpr_addon_purchase_requirement_notification_text', $message,  $product );
 }
