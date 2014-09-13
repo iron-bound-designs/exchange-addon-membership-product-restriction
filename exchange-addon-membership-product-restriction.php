@@ -24,6 +24,7 @@ function it_exchange_register_membership_product_restriction_addon() {
 	  'author'      => 'Iron Bound Designs',
 	  'author_url'  => 'http://www.ironbounddesigns.com',
 	  'file'        => dirname( __FILE__ ) . '/init.php',
+	  'icon'        => IT_Exchange_Membership_Product_Restriction::$url . 'assets/images/icon-50x50.png',
 	  'category'    => 'product-feature',
 	  'basename'    => plugin_basename( __FILE__ ),
 	  'labels'      => array(
