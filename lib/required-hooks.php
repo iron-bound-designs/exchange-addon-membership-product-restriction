@@ -234,6 +234,24 @@ function it_exchange_mpr_addon_sw_purchase_requirements_callback() {
 }
 
 /**
+ * For some reason, our SW state isn't always added to the white list.
+ * This forces our SW state into the white list.
+ *
+ * @param $existing array
+ *
+ * @return array
+ */
+function it_exchange_mpr_addon_register_sw_valid_state( $existing ) {
+	if ( ! in_array( 'membership-product-restriction', $existing ) ) {
+		$existing[] = 'membership-product-restriction';
+	}
+
+	return $existing;
+}
+
+add_filter( 'it_exchange_super_widget_valid_states', 'it_exchange_mpr_addon_register_sw_valid_state' );
+
+/**
  * Register our template paths
  *
  * @param array $paths existing template paths
