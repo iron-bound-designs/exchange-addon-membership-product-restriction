@@ -12,7 +12,7 @@
 require_once( IT_Exchange_Membership_Product_Restriction::$dir . "lib/productfeature/load.php" );
 
 /**
- * Load our required hooks
+ * Load our addon functions
  */
 require_once( IT_Exchange_Membership_Product_Restriction::$dir . "lib/addon-functions.php" );
 

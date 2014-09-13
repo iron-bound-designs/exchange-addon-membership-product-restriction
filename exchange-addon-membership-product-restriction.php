@@ -11,7 +11,7 @@ Domain: ibd-exchange-addon-membership-product-restriction
 */
 
 /**
- * This registers our plugin as an events add-on
+ * This registers our plugin as a product feature add-on
  *
  * @since 1.0.0
  *
@@ -40,7 +40,8 @@ add_action( 'it_exchange_register_addons', 'it_exchange_register_membership_prod
  * Loads the translation data for WordPress
  *
  * @uses load_plugin_textdomain()
- * @since 1.0.3
+ * @since 1.0
+ *
  * @return void
  */
 function it_exchange_membership_product_restriction_set_textdomain() {

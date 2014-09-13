@@ -164,6 +164,11 @@ function it_exchange_mpr_addon_register_checkout_purchase_requirements() {
 			  )
 			);
 
+			/**
+			 * Filter the args that are passed to the purchase requirement for checkout.
+			 *
+			 * @param $args array
+			 */
 			$args = apply_filters( 'it_exchange_mpr_addon_checkout_purchase_requirements', $args );
 
 			it_exchange_register_purchase_requirement( 'membership-product-restriction', $args );
@@ -188,6 +193,11 @@ function it_exchange_mpr_addon_register_sw_purchase_requirements() {
 	  'notification'     => __( "Sorry, you need to have purchased another product in order to purchase this item.", IT_Exchange_Membership_Product_Restriction::SLUG ) // this should never be displayed
 	);
 
+	/**
+	 * Filter the args that are passed to the purchase requirement for super widget.
+	 *
+	 * @param $args array
+	 */
 	$args = apply_filters( 'it_exchange_mpr_addon_sw_purchase_requirements', $args );
 
 	it_exchange_register_purchase_requirement( 'membership-product-restriction-sw', $args );
