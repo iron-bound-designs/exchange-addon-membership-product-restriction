@@ -148,3 +148,32 @@ function it_exchange_mpr_addon_ajax_get_customer_products( $user_id ) {
 	// Return
 	return apply_filters( 'it_exchange_get_customer_products', $products, $user_id );
 }
+
+/**
+ * @param $required_product_id int
+ *
+ * @return string
+ */
+function it_exchange_mpr_addon_get_purchase_requirement_message( $required_product_id ) {
+	$product = it_exchange_get_product( $required_product_id );
+	$title = $product->post_title;
+	$url = get_permalink( $product->ID );
+	$link = "<a href=\"$url\">$title</a>";
+
+	$default = sprintf( __( "Sorry, you need to have purchased the %s product to purchase this item.",
+			IT_Exchange_Membership_Product_Restriction::SLUG ), $link );
+
+	$addon_settings = it_exchange_get_option( 'addon_mpr' );
+
+	$message = $addon_settings['cannot-purchase-message'];
+
+	if ( empty( $message ) ) {
+		$message = $default;
+	} else {
+		$message = str_replace( "%product%", $link, $message );
+	}
+
+	$message = apply_filters( 'it_exchange_mpr_addon_purchase_requirement_notification_text', $message,  $product );
+
+	return $message;
+}

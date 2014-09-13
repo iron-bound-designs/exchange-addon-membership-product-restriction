@@ -151,17 +151,12 @@ function it_exchange_mpr_addon_register_checkout_purchase_requirements() {
 		else {
 			unset( $GLOBALS['it_exchange']['purchase-requirements']['membership-product-restriction-sw'] );
 
-			$url = get_permalink( $target_membership_product->ID );
 
 			$args = array(
 			  'priority'         => '5',
 			  'requirement-met'  => '__return_false',
 			  'sw-template-part' => 'membership-product-restriction',
-			  'notification'     => apply_filters( 'it_exchange_mpr_addon_purchase_requirement_notification_text', sprintf( __( "Sorry, you need to have purchased the %s product to purchase this item.",
-					IT_Exchange_Membership_Product_Restriction::SLUG
-				  ), "<a href=\"$url\">$target_membership_product->post_title</a>"
-				), $target_membership_product
-			  )
+			  'notification'     => it_exchange_mpr_addon_get_purchase_requirement_message( $target_membership_product->ID )
 			);
 
 			/**
