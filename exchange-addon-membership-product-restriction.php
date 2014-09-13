@@ -2,7 +2,7 @@
 /*
 Plugin Name: iThemes Exchange Membership Product Restriction Add-on
 Plugin URI: http://www.ironbounddesigns.com
-Description: Require users to have purchased a certain membership product type to purchase selected products
+Description: Require customers to have purchased a certain membership product to purchase selected products
 Version: 1.2
 Author: Iron Bound Designs
 Author URI: http://www.ironbounddesigns.com
@@ -20,7 +20,7 @@ Domain: ibd-exchange-addon-membership-product-restriction
 function it_exchange_register_membership_product_restriction_addon() {
 	$options = array(
 		'name'              => __( 'Membership Product Restriction', IT_Exchange_Membership_Product_Restriction::SLUG ),
-		'description'       => __( 'Limit product purchase to certain membership products', IT_Exchange_Membership_Product_Restriction::SLUG ),
+		'description'       => __( 'Require customers to have purchased a certain membership product to purchase selected products', IT_Exchange_Membership_Product_Restriction::SLUG ),
 		'author'            => 'Iron Bound Designs',
 		'author_url'        => 'http://www.ironbounddesigns.com',
 		'file'              => dirname( __FILE__ ) . '/init.php',
