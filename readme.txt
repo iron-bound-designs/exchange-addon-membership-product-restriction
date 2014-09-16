@@ -28,6 +28,12 @@ Requires iThemes Exchange and the Membership Add-on.
 
 == Changelog ==
 
+= 1.3 =
+* Add: Control purchase requirement message
+* Add: Allow for opening product link in new tab
+* Add: Plugin Icon
+* Fix: Ensure purchase message always shows after page refresh
+
 = 1.2 =
 * Fix: Speed improvements
 
