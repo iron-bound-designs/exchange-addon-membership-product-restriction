@@ -159,6 +159,8 @@ function it_exchange_mpr_addon_ajax_get_customer_products( $user_id ) {
 /**
  * Retrieve the purchase requirement message.
  *
+ * @since 1.3
+ *
  * @param $required_product_id int
  *
  * @return string
