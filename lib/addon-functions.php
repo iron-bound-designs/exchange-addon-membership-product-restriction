@@ -39,28 +39,10 @@ function it_exchange_mpr_addon_user_has_access_to_required_membership_product( $
 
 	array_unshift( $parents, (int) $required_product_id );
 
-	$all_customer_products = wp_cache_get( 'it_exchange_mpr_all_customer_products' );
+	$customer_products = it_exchange_get_session_data( 'member_access' );
 
-	if ( false === $all_customer_products || !isset( $all_customer_products[$user_id] ) ) {
-
-		if ( !is_array( $all_customer_products ) ) {
-			$all_customer_products = array();
-		}
-
-		if ( !empty( $_GET['it-exchange-sw-ajax'] ) )
-			$customer_products = it_exchange_mpr_addon_ajax_get_customer_products( $user_id );
-		else
-			$customer_products = it_exchange_get_customer_products( $user_id );
-
-		$all_customer_products[$user_id] = $customer_products;
-
-		wp_cache_set( 'it_exchange_mpr_all_customer_products', $all_customer_products, '', 60 );
-	}
-
-	$customer_products = $all_customer_products[$user_id];
-
-	foreach ( $customer_products as $customer_product ) {
-		if ( in_array( $customer_product['product_id'], $parents ) ) {
+	foreach ( $customer_products as $customer_product => $transaction_id ) {
+		if ( in_array( $customer_product, $parents ) ) {
 			return apply_filters( 'it_exchange_mpr_addon_user_has_access_to_required_membership_product', true, $user_id, $required_product_id );
 		}
 	}
