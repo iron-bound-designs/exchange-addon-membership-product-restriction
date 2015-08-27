@@ -216,6 +216,10 @@ function it_exchange_mpr_addon_sw_purchase_requirements_callback() {
 		$post_id = $GLOBALS['it_exchange']['product']->ID;
 	} elseif ( $GLOBALS['post'] instanceof WP_Post ) {
 		$post_id = $GLOBALS['post']->ID;
+	} else {
+		error_log( 'Error determining current product.' );
+
+		return true;
 	}
 
 	if ( ! it_exchange_product_has_feature( $post_id, 'membership-product-restriction' ) )
