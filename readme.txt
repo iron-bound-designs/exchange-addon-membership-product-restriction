@@ -3,8 +3,8 @@ Contributors: TimothyBlynJacobs
 Donate link: http://ironbounddesigns.com/
 Tags: iThemes Exchange, addon, ecommerce, discount, membership, restrictions, members
 Requires at least: 3.8
-Tested up to: 4.0
-Stable tag: 1.3
+Tested up to: 4.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,11 @@ Requires iThemes Exchange and the Membership Add-on.
 4. Activate the plugin through the 'Plugins' menu in WordPress Administration.
 
 == Changelog ==
+
+= 1.4 =
+* Add: Support for Umbrella Memberships
+* Fix: Ensure customer has a non-expired membership
+* Fix: Ensure product restriction works immediately after logging in via the Super Widget
 
 = 1.3 =
 * Add: Control purchase requirement message
