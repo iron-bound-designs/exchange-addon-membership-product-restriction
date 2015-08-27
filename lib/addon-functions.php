@@ -47,10 +47,22 @@ function it_exchange_mpr_addon_user_has_access_to_required_membership_product( $
 			$all_customer_products = array();
 		}
 
-		if ( !empty( $_GET['it-exchange-sw-ajax'] ) )
-			$customer_products = it_exchange_mpr_addon_ajax_get_customer_products( $user_id );
-		else
-			$customer_products = it_exchange_get_customer_products( $user_id );
+		$customer_memberships = it_exchange_membership_addon_get_customer_memberships( $user_id );
+
+		if ( ! is_array( $customer_memberships ) ) {
+			$customer_products = array();
+		} else {
+
+			$customer_products = array();
+
+			foreach ( $customer_memberships as $transaction => $products ) {
+				foreach ( $products as $product_id ) {
+					$customer_products[] = array(
+						'product_id' => $product_id
+					);
+				}
+			}
+		}
 
 		$all_customer_products[$user_id] = $customer_products;
 
@@ -81,6 +93,8 @@ function it_exchange_mpr_addon_user_has_access_to_required_membership_product( $
  * So we have a custom function to overcome that.
  *
  * Basically we are just removing the check to it_exchange_is_page('confirmation')
+ *
+ * @deprecated
  *
  * @param $user_id int
  *
