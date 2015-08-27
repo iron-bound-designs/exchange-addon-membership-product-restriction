@@ -121,10 +121,12 @@ function it_exchange_mpr_addon_register_checkout_purchase_requirements() {
 	if ( is_admin() )
 		return;
 
-	if ( ! it_exchange_is_page( 'checkout' ) )
+	if ( ! it_exchange_is_page( 'checkout' ) || it_exchange_in_superwidget() )
 		return;
 
 	$products = it_exchange_get_cart_products();
+
+	error_log('here');
 
 	foreach ( $products as $product ) {
 		if ( ! is_array( $product ) )
@@ -151,9 +153,8 @@ function it_exchange_mpr_addon_register_checkout_purchase_requirements() {
 		else {
 			unset( $GLOBALS['it_exchange']['purchase-requirements']['membership-product-restriction-sw'] );
 
-
 			$args = array(
-			  'priority'         => '5',
+			  'priority'         => 5,
 			  'requirement-met'  => '__return_false',
 			  'sw-template-part' => 'membership-product-restriction',
 			  'notification'     => it_exchange_mpr_addon_get_purchase_requirement_message( $target_membership_product->ID )
@@ -182,7 +183,7 @@ add_action( 'template_redirect', 'it_exchange_mpr_addon_register_checkout_purcha
  */
 function it_exchange_mpr_addon_register_sw_purchase_requirements() {
 	$args = array(
-	  'priority'         => '5',
+	  'priority'         => 5,
 	  'requirement-met'  => 'it_exchange_mpr_addon_sw_purchase_requirements_callback',
 	  'sw-template-part' => 'membership-product-restriction',
 	  'notification'     => __( "Sorry, you need to have purchased another product in order to purchase this item.", IT_Exchange_Membership_Product_Restriction::SLUG ) // this should never be displayed
@@ -208,9 +209,14 @@ add_action( 'init', 'it_exchange_mpr_addon_register_sw_purchase_requirements', 1
  * @return boolean
  */
 function it_exchange_mpr_addon_sw_purchase_requirements_callback() {
-	global $post;
 
-	$post_id = $post->ID;
+	if ( isset($_GET['sw-product'])) {
+		$post_id = $_GET['sw-product'];
+	} elseif (isset($GLOBALS['it_exchange']['product'])) {
+		$post_id = $GLOBALS['it_exchange']['product']->ID;
+	} elseif ( $GLOBALS['post'] instanceof WP_Post ) {
+		$post_id = $GLOBALS['post']->ID;
+	}
 
 	if ( ! it_exchange_product_has_feature( $post_id, 'membership-product-restriction' ) )
 		return true;
