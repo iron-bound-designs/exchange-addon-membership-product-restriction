@@ -3,7 +3,7 @@
 Plugin Name: iThemes Exchange Membership Product Restriction Add-on
 Plugin URI: http://www.ironbounddesigns.com
 Description: Require customers to have purchased a certain membership product to purchase selected products
-Version: 1.4
+Version: 1.5
 Author: Iron Bound Designs
 Author URI: http://www.ironbounddesigns.com
 License: GPL v2
