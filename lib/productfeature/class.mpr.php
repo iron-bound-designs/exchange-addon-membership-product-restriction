@@ -19,7 +19,7 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 	protected $post_id = - 1;
 
 	/**
-	 *
+	 * Constructor.
 	 */
 	function __construct() {
 		if ( isset( $_GET['post'] ) )
@@ -32,7 +32,7 @@ class IT_Exchange_MPR_ProductFeature_MPR extends IT_Exchange_Product_Feature_Abs
 
 		$this->metabox_title = $args['metabox_title'];
 
-		parent::IT_Exchange_Product_Feature_Abstract( $args );
+		parent::__construct( $args );
 
 		$this->feature_data = it_exchange_get_product_feature( $this->post_id, $this->slug );
 	}
